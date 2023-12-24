@@ -1,0 +1,43 @@
+VOICU CATALIN MARIAN 332CC Tema1 APD
+
+Am creat o structura "ThreadData", care contine datele necesare pentru
+fiecare thread.
+
+Functia "min" returneaza minimul dintre doua numere si este folosit
+pentru calcularea intervalelor de prelucrare ale thread-urilor.
+
+In functia "main" initializez si aloc memorie resurselor apoi verific
+daca este nevoie de rescalare, creez si astept thread-urile. Imaginea
+rezultata este scrisa intr-un fisier si resursele sunt eliberate.
+
+In functia "main" initializez toate variabilele apoi verific daca este 
+nevoie de rescalare si aloc memorie pentru imaginea cea noua. Si aloc
+memorie pentru grid. Initializez structura "ThreadData" pentru fiecare 
+thread cu datele necesare. Creez thread-urile si ii atribui fiecaruia
+structura sa corespunzatoare in functie de id-ul thread-ului. Astept
+ca toate firele de executie sa isi termine executia folosind
+"pthread_join". Scriu datele imaginii rezultate in fisierul de iesire,
+distrug bariera si eliverez memoria alocata.
+
+Functia "thread_function" este executata de fiecare thread creat in
+program. Aceasta realizeaza operatiunile pentru prelucrarea imaginilor
+luate din scheletul temei, folosind cele 3 functii "rescale_image", 
+"sample_grid" si "march", dar spre deosebire de schelet, in aceasta
+functie, functionalitatea operatiilor se face in mod paralel, astfel
+scazand timpul de rulare al programului. 
+In partea "Rescale_image" verific daca este necesara redimensionarea 
+imaginii folosindu-ma de "check", daca este nevoie de redimensionarea 
+ma folosesc de Bicubic Interpolation. Fiecare thread calculeaza
+intervalul sau de executie pentru rescale si efectueaza interpolarea 
+bicubica, apoi asteapta ca toate thread-urile sa termine executia 
+folosind o bariera.
+In partea "Sample_grid" calculez intervalele de prelucrare pentru
+fiecare thread in functie de numarul de linii si coloane ale imaginii
+rezultate din redimensionarea si aplic operatiile din "sample_grid",
+apoi astept ca toate thread-urile sa termine executia folosind
+o bariera.
+In partea "March" calculez intervalele de prelucrare pentru fiecare
+thread in functie de numarul de linii si aplic operatiile din "march"
+si astept ca toate thread-urile sa termine executia folosind o bariera.
+Thread-ul curent se incheie dupa terminarea tuturor operatiilor.
+
